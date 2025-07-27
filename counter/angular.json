@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/counter",
               "budgets": [
                 {
                   "type": "initial",
