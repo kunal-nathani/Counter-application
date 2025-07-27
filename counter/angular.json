@@ -35,7 +35,7 @@
           },
           "configurations": {
             "production": {
-              "outputPath": "dist/counter/browser/index.html",
+              "outputPath": "dist/counter",
               "budgets": [
                 {
                   "type": "initial",
