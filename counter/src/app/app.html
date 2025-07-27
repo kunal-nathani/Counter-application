@@ -1,0 +1,23 @@
+<div class="counter-application">
+  <h1>Counter Application</h1>
+  <h2 class="count">{{ count }}</h2>
+  <div class="quantity-input">
+    <button class="minus-btn" type="button" (click)="handleCounter('minus')">
+      -
+    </button>
+    <button class="reset-btn" type="button" (click)="handleCounter('reset')">
+      Reset
+    </button>
+    <button class="plus-btn" type="button" (click)="handleCounter('plus')">
+      +
+    </button>
+  </div>
+
+  <p *ngIf="showError" class="error-message">{{ errorMessage }}</p>
+</div>
+
+<div class="app-overlay" [class.active]="showOverlay">
+  <div class="overlay-content">
+    <h3>{{ overlayMessage }}</h3>
+  </div>
+</div>

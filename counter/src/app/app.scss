@@ -1,0 +1,225 @@
+// Variables for easy theme adjustments
+$primary-color: #28a745; // Green for plus
+$secondary-color: #dc3545; // Red for minus
+$tertiary-color: #ffc107; // Amber for reset
+$text-dark: #263238; // Dark slate grey
+$text-light: #eceff1; // Light grey
+$background-light: #f0f2f5; // Very light grey background
+$background-dark: #37474f; // Dark slate background for overlay
+$border-radius-lg: 25px;
+$border-radius-sm: 15px;
+$shadow-strength: 0.15;
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: $background-light;
+  font-family: 'Poppins', sans-serif;
+  color: $text-dark;
+  overflow: hidden;
+}
+
+/* --- Counter Application Styling --- */
+.counter-application {
+  background: linear-gradient(145deg, #e0e0e0, #ffffff);
+  border-radius: $border-radius-lg;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, $shadow-strength * 0.5),
+    -10px -10px 30px rgba(255, 255, 255, 0.7);
+  padding: 40px 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  position: relative;
+  z-index: 10;
+  transform: scale(1);
+  transition: transform 0.4s ease-out, filter 0.4s ease-out;
+
+  &.blurred {
+    filter: blur(5px) grayscale(0.5);
+    transform: scale(0.95);
+  }
+}
+
+h1 {
+  color: $text-dark;
+  font-size: 2.5em;
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.count {
+  font-size: 6em;
+  font-weight: 900;
+  color: #007bff;
+  text-shadow: 0 0 15px rgba(0, 123, 255, 0.5), 0 0 25px rgba(0, 123, 255, 0.3);
+  letter-spacing: -0.05em;
+  min-width: 200px;
+  display: inline-block;
+  background: linear-gradient(45deg, #007bff, #00c7e5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.1s ease-out;
+
+  &.pop {
+    animation: popEffect 0.2s ease-out;
+  }
+}
+
+@keyframes popEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.quantity-input {
+  display: flex;
+  gap: 25px;
+  margin-top: 15px;
+}
+
+/* --- Button Styling (REVISED) --- */
+button {
+  border: none;
+  padding: 16px 32px;
+  font-size: 1.2em;
+  font-weight: 700;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: $text-light; /* All button text is light for contrast */
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, $shadow-strength * 0.7),
+    -5px -5px 15px rgba(255, 255, 255, 0.6); /* More pronounced, soft shadow */
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, $shadow-strength * 0.9),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    filter: brightness(1.1); /* Slightly brighten on hover */
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: inset 3px 3px 7px rgba(0, 0, 0, $shadow-strength * 0.4),
+      inset -3px -3px 7px rgba(255, 255, 255, 0.5); /* Inset shadow for pressed effect */
+    filter: brightness(0.9); /* Slightly darken on press */
+  }
+}
+
+.minus-btn {
+  background: linear-gradient(145deg, #ef5350, #d32f2f); /* Red gradient */
+  color: white; /* Ensure text is white for contrast */
+}
+
+.reset-btn {
+  background: linear-gradient(145deg, #ffca28, #ffa000); /* Amber gradient */
+  color: white;
+}
+
+.plus-btn {
+  background: linear-gradient(145deg, #66bb6a, #388e3c); /* Green gradient */
+  color: white;
+}
+
+/* --- Error Message Display --- */
+.error-message {
+  color: #d32f2f;
+  font-size: 0.95em;
+  font-weight: 600;
+  margin-top: 15px;
+  background-color: rgba(#d32f2f, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #d32f2f;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Overlay Styling --- */
+.app-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($background-dark, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  backdrop-filter: blur(5px);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    .overlay-content {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    ~ .counter-application {
+      filter: blur(5px) grayscale(0.5);
+      transform: scale(0.95);
+    }
+  }
+}
+
+.overlay-content {
+  background: linear-gradient(145deg, #4a5c67, #37474f);
+  color: $text-light;
+  padding: 40px;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, $shadow-strength * 2),
+    0 0 0 5px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  max-width: 400px;
+  transform: translateY(30px) scale(0.9);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    opacity 0.4s ease-in-out;
+
+  h3 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #81d4fa;
+  }
+
+  p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .overlay-icon {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: #ffecb3;
+  }
+}
